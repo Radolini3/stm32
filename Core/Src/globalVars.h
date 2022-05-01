@@ -18,6 +18,7 @@
 
 	extern uint32_t ADC_VAL[7];
 	extern float moisture_percentage[6];
+	extern float lightIntensity;
 
 	extern float Temperature;
 	extern float Humidity;

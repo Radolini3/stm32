@@ -27,6 +27,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "globalVars.h"
+#include "stdio.h"
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,11 +75,35 @@ void sendString_UART(char*text){
 	HAL_UART_Transmit(&huart2,  (uint8_t*)text, strlen(text), 1000);
 }
 
+void dirtHumRead(){
+	  HAL_ADC_Start_DMA(&hadc1, ADC_VAL, 7);
+	  delay_us(100000);
+	  HAL_ADC_Stop_DMA(&hadc1);
+
+	  for(int i = 0; i<6; i++){
+	  		  moisture_percentage[i] = 100-( map(ADC_VAL[i], 1000, 3970, 0, 100));
+
+	  		  if (moisture_percentage[i]>100){moisture_percentage[i] = 100;}
+	  		  if (moisture_percentage[i]<0){moisture_percentage[i] = 0;}
+	  		  }
+	  lightIntensity = map(ADC_VAL[6], 0, 4095, 0, 100);
+
+	  							for(int i = 0; i<6; i++){
+	  								  sprintf(UartOutText, "Czujnik nr: %d val %2.f \n\r ", i+1, moisture_percentage[i]);
+	  								  sendString_UART(UartOutText);
+	  							}
+
+
+	  			sprintf(UartOutText, "Natezenie oswietlenia: %2.f \n\r ", lightIntensity);
+	  			sendString_UART(UartOutText);
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-//	dirtHumRead();s
+	dirtHumRead();
 	DHT11_allData();
 
 }
+
 /* USER CODE END 0 */
 
 /**
@@ -125,9 +151,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_ADC_Start_DMA(&hadc1, ADC_VAL, 7);
-	  HAL_Delay(1000);
-	  HAL_ADC_Stop_DMA(&hadc1);
+
 
     /* USER CODE END WHILE */
 

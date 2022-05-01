@@ -21,6 +21,7 @@
 
 	 uint32_t ADC_VAL[7];
 	 float moisture_percentage[6];
+	 float lightIntensity;
 
 	 float Temperature;
 	 float Humidity;
