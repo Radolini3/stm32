@@ -1,0 +1,6 @@
+../Core/Src/ADC_Switcher.c:14:6:ADC_Select_CH1	32	static
+../Core/Src/ADC_Switcher.c:28:6:ADC_Select_CH2	32	static
+../Core/Src/ADC_Switcher.c:42:6:ADC_Select_CH6	32	static
+../Core/Src/ADC_Switcher.c:56:6:ADC_Select_CH7	32	static
+../Core/Src/ADC_Switcher.c:69:6:ADC_Select_CH8	32	static
+../Core/Src/ADC_Switcher.c:82:6:ADC_Select_CH9	32	static
