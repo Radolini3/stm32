@@ -22,7 +22,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 		disp_No++;
-		if (disp_No == 5) disp_No = 1;
+		if (disp_No == 6) disp_No = 1;
 		displayReadings(disp_No);
 }
 /*Milisekundowy delay na timerze, tim2 prescaler 72-1, brak przerwań przez tim2*/

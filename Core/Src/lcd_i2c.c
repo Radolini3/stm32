@@ -27,12 +27,10 @@
 
 
 
-void lcd_init(struct lcd_disp * lcd)
-{
+void lcd_init(struct lcd_disp * lcd){
 	uint8_t xpin = 0;
 	/* set backlight */
-	if(lcd->bl)
-	{
+	if(lcd->bl){
 		xpin = BL_PIN;
 	}
 
@@ -55,8 +53,7 @@ void lcd_init(struct lcd_disp * lcd)
 
 }
 
-void lcd_write(uint8_t addr, uint8_t data, uint8_t xpin)
-{
+void lcd_write(uint8_t addr, uint8_t data, uint8_t xpin){
 	uint8_t tx_data[4];
 
 	/* split data */
@@ -68,16 +65,14 @@ void lcd_write(uint8_t addr, uint8_t data, uint8_t xpin)
 	/* send data via i2c */
 	HAL_I2C_Master_Transmit(&HI2C_DEF, addr, tx_data, 4, 100);
 
-	delay_us(5000);
+	delay_us(750);
 }
 
-void lcd_display(struct lcd_disp * lcd)
-{
+void lcd_display(struct lcd_disp * lcd){
 	uint8_t xpin = 0, i = 0;
 
 	/* set backlight */
-	if(lcd->bl)
-	{
+	if(lcd->bl){
 		xpin = BL_PIN;
 	}
 
@@ -85,8 +80,8 @@ void lcd_display(struct lcd_disp * lcd)
 
 	/* send first line data */
 	lcd_write(lcd->addr, FIRST_CHAR_LINE_1, xpin);
-	while(lcd->f_line[i])
-	{
+
+	while(lcd->f_line[i]){
 		lcd_write(lcd->addr, lcd->f_line[i], (xpin | RS_PIN));
 		i++;
 	}
@@ -94,8 +89,8 @@ void lcd_display(struct lcd_disp * lcd)
 	/* send second line data */
 	i = 0;
 	lcd_write(lcd->addr, FIRST_CHAR_LINE_2, xpin);
-	while(lcd->s_line[i])
-	{
+
+	while(lcd->s_line[i]){
 		lcd_write(lcd->addr, lcd->s_line[i], (xpin | RS_PIN));
 		i++;
 	}
@@ -106,8 +101,7 @@ void lcd_clear(struct lcd_disp * lcd)
 	uint8_t xpin = 0;
 
 	/* set backlight */
-	if(lcd->bl)
-	{
+	if(lcd->bl){
 		xpin = BL_PIN;
 	}
 

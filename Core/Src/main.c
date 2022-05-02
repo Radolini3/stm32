@@ -72,7 +72,7 @@ void dirtHumRead(){
 	  		  if (moisture_percentage[i]>100){moisture_percentage[i] = 100;}
 	  		  if (moisture_percentage[i]<0){moisture_percentage[i] = 0;}
 	  		  }
-	  lightIntensity = map(ADC_VAL[6], 0, 4095, 0, 100);
+	  lightIntensity = map(ADC_VAL[6], 150, 4095, 0, 100);
 	  sendAllReadingsUART();
 }
 void sendAllReadingsUART(){
@@ -101,6 +101,10 @@ void displayReadings(int disp_No){
 	case 4:
 	  sprintf((char *)disp.f_line, "AirT: %2.f degC", Temperature);
 	  sprintf((char *)disp.s_line, "AirH: %2.f%% ", Humidity);
+		break;
+	case 5:
+	  sprintf((char *)disp.f_line, "LightInt: %2.f%%", lightIntensity);
+	  sprintf((char *)disp.s_line, "");
 		break;
 	default:
 		break;

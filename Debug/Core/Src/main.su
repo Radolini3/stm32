@@ -1,6 +1,6 @@
 ../Core/Src/main.c:64:6:dirtHumRead	24	static
 ../Core/Src/main.c:78:6:sendAllReadingsUART	32	static
 ../Core/Src/main.c:87:6:displayReadings	16	static
-../Core/Src/main.c:116:5:main	8	static
-../Core/Src/main.c:173:6:SystemClock_Config	96	static
-../Core/Src/main.c:223:6:Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/main.c:120:5:main	8	static
+../Core/Src/main.c:177:6:SystemClock_Config	96	static
+../Core/Src/main.c:227:6:Error_Handler	4	static,ignoring_inline_asm
