@@ -23,6 +23,7 @@
 	extern float Temperature;
 	extern float Humidity;
 	extern float lightIntensity;
-
+	extern int disp_No;
+	extern struct lcd_disp disp;
 #endif /* SRC_GLOBALVARS_H_ */
 

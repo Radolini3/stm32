@@ -11,10 +11,11 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-
+/*Moje include'y*/
 	#include "string.h"
 	#include "stdio.h"
 	#include "globalVars.h"
+	/*Zdefiniuj PA6*/
 	#define PORT_A GPIOA
 	#define DHT11_PIN GPIO_PIN_6 //Dla czujnika DHT11 temperatury/wilgotności powietrza (PA6)
 

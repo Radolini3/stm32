@@ -20,6 +20,7 @@
 #include "main.h"
 #include "adc.h"
 #include "dma.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -29,6 +30,7 @@
 #include "globalVars.h"
 #include "stdio.h"
 #include "string.h"
+#include "lcd_i2c.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,22 +61,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-float map(uint16_t val, int in_min, int in_max, int out_min, int out_max) {
-  return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-/*=============================Milisekundowy delay na timerze=============================*/
-void delay_us(uint32_t time){
-	__HAL_TIM_SET_COUNTER(&htim2, 0);
-	while ((__HAL_TIM_GET_COUNTER(&htim2))<time);
-}
-
-/*=============================Wyślij po UARCIE numer 2=============================*/
-void sendString_UART(char*text){
-	HAL_UART_Transmit(&huart2,  (uint8_t*)text, strlen(text), 1000);
-}
-
 void dirtHumRead(){
 	  HAL_ADC_Start_DMA(&hadc1, ADC_VAL, 7);
 	  delay_us(100000);
@@ -87,23 +73,50 @@ void dirtHumRead(){
 	  		  if (moisture_percentage[i]<0){moisture_percentage[i] = 0;}
 	  		  }
 	  lightIntensity = map(ADC_VAL[6], 0, 4095, 0, 100);
-
-	  							for(int i = 0; i<6; i++){
-	  								  sprintf(UartOutText, "Czujnik nr: %d val %2.f \n\r ", i+1, moisture_percentage[i]);
-	  								  sendString_UART(UartOutText);
-	  							}
-
-
-	  			sprintf(UartOutText, "Natezenie oswietlenia: %2.f \n\r ", lightIntensity);
-	  			sendString_UART(UartOutText);
+	  sendAllReadingsUART();
+}
+void sendAllReadingsUART(){
+	for(int i = 0; i<6; i++){
+		sprintf(UartOutText, "Czujnik nr: %d val %2.f \n\r ", i+1, moisture_percentage[i]);
+		sendString_UART(UartOutText);
+	}
+	sprintf(UartOutText, "Natezenie oswietlenia: %2.f \n\r ", lightIntensity);
+	sendString_UART(UartOutText);
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	dirtHumRead();
-	DHT11_allData();
+void displayReadings(int disp_No){
 
+	if (disp_No == 1){
+		  sprintf((char *)disp.f_line, "HSens1: %2.f %", moisture_percentage[0]);
+		  sprintf((char *)disp.s_line, "HSens2: %2.f %", moisture_percentage[1]);
+	}
+	if(disp_No==2){
+		  sprintf((char *)disp.f_line, "HSens3: %2.f %", moisture_percentage[2]);
+		  sprintf((char *)disp.s_line, "HSens4: %2.f %", moisture_percentage[3]);
+	}
+	if(disp_No==3){
+		  sprintf((char *)disp.f_line, "HSens5: %2.f %", moisture_percentage[4]);
+		  sprintf((char *)disp.s_line, "HSens6: %2.f %", moisture_percentage[5]);
+	}
+	if (disp_No == 4){
+		  sprintf((char *)disp.f_line, "AirT: %2.f degC", Temperature);
+		  sprintf((char *)disp.s_line, "AirH: %2.f %", Humidity);
+	}
+	lcd_display(&disp);
+//	switch(disp_No){
+//	case 1:
+//		break;
+//	case 2:
+//		break;
+//	case 3:
+//		break;
+//	case 4:
+//		break;
+//	default:
+//		break;
+//
+//	}
 }
-
 /* USER CODE END 0 */
 
 /**
@@ -139,19 +152,23 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM2_Init();
   MX_TIM6_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start(&htim2);
   HAL_TIM_Base_Start_IT(&htim6);
 
-
-
+  disp.addr = (0x27 << 1);
+  disp.bl = true;
+  lcd_init(&disp);
+  sprintf((char *)disp.f_line, "HSens1: %2.f", moisture_percentage[0]);
+  sprintf((char *)disp.s_line, "HSens2: %2.f", moisture_percentage[1]);
+  lcd_display(&disp);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
 
     /* USER CODE END WHILE */
 
@@ -197,8 +214,9 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_ADC12;
   PeriphClkInit.Adc12ClockSelection = RCC_ADC12PLLCLK_DIV1;
+  PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();

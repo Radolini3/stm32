@@ -53,6 +53,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+	float map(uint16_t val, int in_min, int in_max, int out_min, int out_max);
 	void delay_us(uint32_t time);
 	void sendString_UART(char*text);
 	void dirtHumRead();
@@ -62,11 +63,13 @@ void Error_Handler(void);
 	uint8_t sensorResponse(void);
 	uint8_t sensorRead(void);
 	void DHT11_allData();
+	void displayReadings(int disp_No);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
+#define B1_EXTI_IRQn EXTI15_10_IRQn
 #define RCC_OSC32_OUT_Pin GPIO_PIN_15
 #define RCC_OSC32_OUT_GPIO_Port GPIOC
 #define USART_TX_Pin GPIO_PIN_2
