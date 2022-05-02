@@ -53,6 +53,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+	void sendAllReadingsUART();
 	float map(uint16_t val, int in_min, int in_max, int out_min, int out_max);
 	void delay_us(uint32_t time);
 	void sendString_UART(char*text);

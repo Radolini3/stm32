@@ -77,45 +77,35 @@ void dirtHumRead(){
 }
 void sendAllReadingsUART(){
 	for(int i = 0; i<6; i++){
-		sprintf(UartOutText, "Czujnik nr: %d val %2.f \n\r ", i+1, moisture_percentage[i]);
+		sprintf(UartOutText, "Czujnik nr: %d val %2.f%%\n\r ", i+1, moisture_percentage[i]);
 		sendString_UART(UartOutText);
 	}
-	sprintf(UartOutText, "Natezenie oswietlenia: %2.f \n\r ", lightIntensity);
+	sprintf(UartOutText, "Natezenie oswietlenia: %2.f%% \n\r ", lightIntensity);
 	sendString_UART(UartOutText);
 }
 
 void displayReadings(int disp_No){
-
-	if (disp_No == 1){
-		  sprintf((char *)disp.f_line, "HSens1: %2.f %", moisture_percentage[0]);
-		  sprintf((char *)disp.s_line, "HSens2: %2.f %", moisture_percentage[1]);
-	}
-	if(disp_No==2){
-		  sprintf((char *)disp.f_line, "HSens3: %2.f %", moisture_percentage[2]);
-		  sprintf((char *)disp.s_line, "HSens4: %2.f %", moisture_percentage[3]);
-	}
-	if(disp_No==3){
-		  sprintf((char *)disp.f_line, "HSens5: %2.f %", moisture_percentage[4]);
-		  sprintf((char *)disp.s_line, "HSens6: %2.f %", moisture_percentage[5]);
-	}
-	if (disp_No == 4){
-		  sprintf((char *)disp.f_line, "AirT: %2.f degC", Temperature);
-		  sprintf((char *)disp.s_line, "AirH: %2.f %", Humidity);
+	switch(disp_No){
+	case 1:
+	  sprintf((char *)disp.f_line, "HSens1: %2.f%%", moisture_percentage[0]);
+	  sprintf((char *)disp.s_line, "HSens2: %2.f%%", moisture_percentage[1]);
+		break;
+	case 2:
+	  sprintf((char *)disp.f_line, "HSens3: %2.f%%", moisture_percentage[2]);
+	  sprintf((char *)disp.s_line, "HSens4: %2.f%%", moisture_percentage[3]);
+		break;
+	case 3:
+	  sprintf((char *)disp.f_line, "HSens5: %2.f%%", moisture_percentage[4]);
+	  sprintf((char *)disp.s_line, "HSens6: %2.f%%", moisture_percentage[5]);
+		break;
+	case 4:
+	  sprintf((char *)disp.f_line, "AirT: %2.f degC", Temperature);
+	  sprintf((char *)disp.s_line, "AirH: %2.f%% ", Humidity);
+		break;
+	default:
+		break;
 	}
 	lcd_display(&disp);
-//	switch(disp_No){
-//	case 1:
-//		break;
-//	case 2:
-//		break;
-//	case 3:
-//		break;
-//	case 4:
-//		break;
-//	default:
-//		break;
-//
-//	}
 }
 /* USER CODE END 0 */
 
@@ -154,15 +144,14 @@ int main(void)
   MX_TIM6_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+
   HAL_TIM_Base_Start(&htim2);
   HAL_TIM_Base_Start_IT(&htim6);
 
   disp.addr = (0x27 << 1);
   disp.bl = true;
   lcd_init(&disp);
-  sprintf((char *)disp.f_line, "HSens1: %2.f", moisture_percentage[0]);
-  sprintf((char *)disp.s_line, "HSens2: %2.f", moisture_percentage[1]);
-  lcd_display(&disp);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
