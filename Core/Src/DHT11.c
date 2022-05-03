@@ -94,9 +94,4 @@
 		  RH = Rh_byte1;
 		  Temperature = (float) TEMP;
 		  Humidity = (float) RH;
-
-
-		  sprintf(UartOutText, "Temp: %2.f Humidity %2.f \n\r ", Temperature, Humidity);
-		  sendString_UART(UartOutText);
-
 	}

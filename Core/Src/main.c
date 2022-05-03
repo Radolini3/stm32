@@ -76,41 +76,31 @@ void dirtHumRead(){
 	  sendAllReadingsUART();
 }
 void sendAllReadingsUART(){
+	/*Przesył pod przechwytywanie do formatu csv*/
 	for(int i = 0; i<6; i++){
-		sprintf(UartOutText, "Czujnik nr: %d val %2.f%%\n\r ", i+1, moisture_percentage[i]);
+		sprintf(UartOutText, "%2.f ", moisture_percentage[i]);
 		sendString_UART(UartOutText);
 	}
-	sprintf(UartOutText, "Natezenie oswietlenia: %2.f%% \n\r ", lightIntensity);
+	sprintf(UartOutText," %2.f", lightIntensity);
 	sendString_UART(UartOutText);
+
+	  sprintf(UartOutText, " %2.f %2.f \n\r", Temperature, Humidity);
+	  sendString_UART(UartOutText);
+
+			/*Przesył pod szukanie problemów*/
+		//	for(int i = 0; i<6; i++){
+		//		sprintf(UartOutText, "Czujnik nr: %d val %2.f%%\n\r ", i+1, moisture_percentage[i]);
+		//		sendString_UART(UartOutText);
+		//	}
+		//	sprintf(UartOutText, "Natezenie oswietlenia: %2.f%% \n\r ", lightIntensity);
+		//	sendString_UART(UartOutText);
+
+		//	  sprintf(UartOutText, "Temp: %2.f Humidity %2.f \n\r ", Temperature, Humidity);
+		//	  sendString_UART(UartOutText);
+
+
 }
 
-void displayReadings(int disp_No){
-	switch(disp_No){
-	case 1:
-	  sprintf((char *)disp.f_line, "HSens1: %2.f%%", moisture_percentage[0]);
-	  sprintf((char *)disp.s_line, "HSens2: %2.f%%", moisture_percentage[1]);
-		break;
-	case 2:
-	  sprintf((char *)disp.f_line, "HSens3: %2.f%%", moisture_percentage[2]);
-	  sprintf((char *)disp.s_line, "HSens4: %2.f%%", moisture_percentage[3]);
-		break;
-	case 3:
-	  sprintf((char *)disp.f_line, "HSens5: %2.f%%", moisture_percentage[4]);
-	  sprintf((char *)disp.s_line, "HSens6: %2.f%%", moisture_percentage[5]);
-		break;
-	case 4:
-	  sprintf((char *)disp.f_line, "AirT: %2.f degC", Temperature);
-	  sprintf((char *)disp.s_line, "AirH: %2.f%% ", Humidity);
-		break;
-	case 5:
-	  sprintf((char *)disp.f_line, "LightInt: %2.f%%", lightIntensity);
-	  sprintf((char *)disp.s_line, "");
-		break;
-	default:
-		break;
-	}
-	lcd_display(&disp);
-}
 /* USER CODE END 0 */
 
 /**
