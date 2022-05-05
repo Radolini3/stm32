@@ -1020,12 +1020,12 @@ Disassembly of section .text:
  8000c20:	b580      	push	{r7, lr}
  8000c22:	af00      	add	r7, sp, #0
 		Set_Pin_Output (PORT_A, DHT11_PIN);  // set the pin as output
- 8000c24:	2140      	movs	r1, #64	; 0x40
+ 8000c24:	2110      	movs	r1, #16
  8000c26:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000c2a:	f7ff ffbd 	bl	8000ba8 <Set_Pin_Output>
 		HAL_GPIO_WritePin (PORT_A, DHT11_PIN, 0);   // pull the pin low
  8000c2e:	2200      	movs	r2, #0
- 8000c30:	2140      	movs	r1, #64	; 0x40
+ 8000c30:	2110      	movs	r1, #16
  8000c32:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000c36:	f002 fecd 	bl	80039d4 <HAL_GPIO_WritePin>
 		delay_us (18000);   // wait for 18ms
@@ -1033,14 +1033,14 @@ Disassembly of section .text:
  8000c3e:	f001 f925 	bl	8001e8c <delay_us>
 	    HAL_GPIO_WritePin (PORT_A, DHT11_PIN, 1);   // pull the pin high
  8000c42:	2201      	movs	r2, #1
- 8000c44:	2140      	movs	r1, #64	; 0x40
+ 8000c44:	2110      	movs	r1, #16
  8000c46:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000c4a:	f002 fec3 	bl	80039d4 <HAL_GPIO_WritePin>
 		delay_us (20);   // wait for 20us
  8000c4e:	2014      	movs	r0, #20
  8000c50:	f001 f91c 	bl	8001e8c <delay_us>
 		Set_Pin_Input(PORT_A, DHT11_PIN);    // set as input
- 8000c54:	2140      	movs	r1, #64	; 0x40
+ 8000c54:	2110      	movs	r1, #16
  8000c56:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000c5a:	f7ff ffc3 	bl	8000be4 <Set_Pin_Input>
 	}
@@ -1062,7 +1062,7 @@ Disassembly of section .text:
  8000c6c:	2028      	movs	r0, #40	; 0x28
  8000c6e:	f001 f90d 	bl	8001e8c <delay_us>
 		if (!(HAL_GPIO_ReadPin (PORT_A, DHT11_PIN))){
- 8000c72:	2140      	movs	r1, #64	; 0x40
+ 8000c72:	2110      	movs	r1, #16
  8000c74:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000c78:	f002 fe94 	bl	80039a4 <HAL_GPIO_ReadPin>
  8000c7c:	4603      	mov	r3, r0
@@ -1072,7 +1072,7 @@ Disassembly of section .text:
  8000c82:	2050      	movs	r0, #80	; 0x50
  8000c84:	f001 f902 	bl	8001e8c <delay_us>
 			if ((HAL_GPIO_ReadPin (PORT_A, DHT11_PIN))) Response = 1;
- 8000c88:	2140      	movs	r1, #64	; 0x40
+ 8000c88:	2110      	movs	r1, #16
  8000c8a:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000c8e:	f002 fe89 	bl	80039a4 <HAL_GPIO_ReadPin>
  8000c92:	4603      	mov	r3, r0
@@ -1087,7 +1087,7 @@ Disassembly of section .text:
 		}
 		while ((HAL_GPIO_ReadPin (PORT_A, DHT11_PIN)));   // wait for the pin to go low
  8000ca2:	bf00      	nop
- 8000ca4:	2140      	movs	r1, #64	; 0x40
+ 8000ca4:	2110      	movs	r1, #16
  8000ca6:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000caa:	f002 fe7b 	bl	80039a4 <HAL_GPIO_ReadPin>
  8000cae:	4603      	mov	r3, r0
@@ -1117,7 +1117,7 @@ Disassembly of section .text:
 		{
 			while (!(HAL_GPIO_ReadPin (PORT_A, DHT11_PIN)));   // wait for the pin to go high
  8000cca:	bf00      	nop
- 8000ccc:	2140      	movs	r1, #64	; 0x40
+ 8000ccc:	2110      	movs	r1, #16
  8000cce:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000cd2:	f002 fe67 	bl	80039a4 <HAL_GPIO_ReadPin>
  8000cd6:	4603      	mov	r3, r0
@@ -1127,7 +1127,7 @@ Disassembly of section .text:
  8000cdc:	2028      	movs	r0, #40	; 0x28
  8000cde:	f001 f8d5 	bl	8001e8c <delay_us>
 			if (!(HAL_GPIO_ReadPin (PORT_A, DHT11_PIN)))   // if the pin is low
- 8000ce2:	2140      	movs	r1, #64	; 0x40
+ 8000ce2:	2110      	movs	r1, #16
  8000ce4:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000ce8:	f002 fe5c 	bl	80039a4 <HAL_GPIO_ReadPin>
  8000cec:	4603      	mov	r3, r0
@@ -1160,7 +1160,7 @@ Disassembly of section .text:
  8000d26:	71fb      	strb	r3, [r7, #7]
 			while ((HAL_GPIO_ReadPin (PORT_A, DHT11_PIN)));  // wait for the pin to go low
  8000d28:	bf00      	nop
- 8000d2a:	2140      	movs	r1, #64	; 0x40
+ 8000d2a:	2110      	movs	r1, #16
  8000d2c:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  8000d30:	f002 fe38 	bl	80039a4 <HAL_GPIO_ReadPin>
  8000d34:	4603      	mov	r3, r0
@@ -2719,10 +2719,6 @@ void sendAllReadingsUART(){
  8001758:	b5b0      	push	{r4, r5, r7, lr}
  800175a:	b084      	sub	sp, #16
  800175c:	af02      	add	r7, sp, #8
-
-		//	  sprintf(UartOutText, "Temp: %2.f Humidity %2.f \n\r ", Temperature, Humidity);
-		//	  sendString_UART(UartOutText);
-
 	/*Przesył pod przechwytywanie do formatu csv*/
 	for(int i = 0; i<6; i++){
  800175e:	2300      	movs	r3, #0
@@ -2788,6 +2784,11 @@ void sendAllReadingsUART(){
 	  sendString_UART(UartOutText);
  80017da:	4805      	ldr	r0, [pc, #20]	; (80017f0 <sendAllReadingsUART+0x98>)
  80017dc:	f000 fb6e 	bl	8001ebc <sendString_UART>
+
+		//	  sprintf(UartOutText, "Temp: %2.f Humidity %2.f \n\r ", Temperature, Humidity);
+		//	  sendString_UART(UartOutText);
+
+
 }
  80017e0:	bf00      	nop
  80017e2:	3708      	adds	r7, #8
