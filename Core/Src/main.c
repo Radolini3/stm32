@@ -63,7 +63,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 void dirtHumRead(){
 	  HAL_ADC_Start_DMA(&hadc1, ADC_VAL, 7);
-	  delay_us(100000);
+	  delay_us(10000); // bez tego delaya się rozlatuje odczyt
 	  HAL_ADC_Stop_DMA(&hadc1);
 
 	  for(int i = 0; i<6; i++){

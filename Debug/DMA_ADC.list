@@ -39,11 +39,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  00023e10  00000000  00000000  0003d7f0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0001b99e  00000000  00000000  00061600  2**0
+ 18 .debug_line   0001b99d  00000000  00000000  00061600  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    000cd0dc  00000000  00000000  0007cf9e  2**0
+ 19 .debug_str    000cd0dc  00000000  00000000  0007cf9d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000050  00000000  00000000  0014a07a  2**0
+ 20 .comment      00000050  00000000  00000000  0014a079  2**0
                   CONTENTS, READONLY
  21 .debug_frame  0000634c  00000000  00000000  0014a0cc  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -2613,102 +2613,102 @@ void dirtHumRead(){
  8001668:	af02      	add	r7, sp, #8
 	  HAL_ADC_Start_DMA(&hadc1, ADC_VAL, 7);
  800166a:	2207      	movs	r2, #7
- 800166c:	4933      	ldr	r1, [pc, #204]	; (800173c <dirtHumRead+0xd8>)
- 800166e:	4834      	ldr	r0, [pc, #208]	; (8001740 <dirtHumRead+0xdc>)
+ 800166c:	4934      	ldr	r1, [pc, #208]	; (8001740 <dirtHumRead+0xdc>)
+ 800166e:	4835      	ldr	r0, [pc, #212]	; (8001744 <dirtHumRead+0xe0>)
  8001670:	f000 fea4 	bl	80023bc <HAL_ADC_Start_DMA>
-	  delay_us(100000);
- 8001674:	4833      	ldr	r0, [pc, #204]	; (8001744 <dirtHumRead+0xe0>)
- 8001676:	f000 fc11 	bl	8001e9c <delay_us>
+	  delay_us(10000); // bez tego delaya się rozlatuje odczyt
+ 8001674:	f242 7010 	movw	r0, #10000	; 0x2710
+ 8001678:	f000 fc10 	bl	8001e9c <delay_us>
 	  HAL_ADC_Stop_DMA(&hadc1);
- 800167a:	4831      	ldr	r0, [pc, #196]	; (8001740 <dirtHumRead+0xdc>)
- 800167c:	f000 ff78 	bl	8002570 <HAL_ADC_Stop_DMA>
+ 800167c:	4831      	ldr	r0, [pc, #196]	; (8001744 <dirtHumRead+0xe0>)
+ 800167e:	f000 ff77 	bl	8002570 <HAL_ADC_Stop_DMA>
 
 	  for(int i = 0; i<6; i++){
- 8001680:	2300      	movs	r3, #0
- 8001682:	607b      	str	r3, [r7, #4]
- 8001684:	e041      	b.n	800170a <dirtHumRead+0xa6>
+ 8001682:	2300      	movs	r3, #0
+ 8001684:	607b      	str	r3, [r7, #4]
+ 8001686:	e041      	b.n	800170c <dirtHumRead+0xa8>
 	  		  moisture_percentage[i] = 100-( map(ADC_VAL[i], 1000, 3970, 0, 100));
- 8001686:	4a2d      	ldr	r2, [pc, #180]	; (800173c <dirtHumRead+0xd8>)
- 8001688:	687b      	ldr	r3, [r7, #4]
- 800168a:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
- 800168e:	b298      	uxth	r0, r3
- 8001690:	2364      	movs	r3, #100	; 0x64
- 8001692:	9300      	str	r3, [sp, #0]
- 8001694:	2300      	movs	r3, #0
- 8001696:	f640 7282 	movw	r2, #3970	; 0xf82
- 800169a:	f44f 717a 	mov.w	r1, #1000	; 0x3e8
- 800169e:	f000 fc2b 	bl	8001ef8 <map>
- 80016a2:	eef0 7a40 	vmov.f32	s15, s0
- 80016a6:	ed9f 7a28 	vldr	s14, [pc, #160]	; 8001748 <dirtHumRead+0xe4>
- 80016aa:	ee77 7a67 	vsub.f32	s15, s14, s15
- 80016ae:	4a27      	ldr	r2, [pc, #156]	; (800174c <dirtHumRead+0xe8>)
- 80016b0:	687b      	ldr	r3, [r7, #4]
- 80016b2:	009b      	lsls	r3, r3, #2
- 80016b4:	4413      	add	r3, r2
- 80016b6:	edc3 7a00 	vstr	s15, [r3]
+ 8001688:	4a2d      	ldr	r2, [pc, #180]	; (8001740 <dirtHumRead+0xdc>)
+ 800168a:	687b      	ldr	r3, [r7, #4]
+ 800168c:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
+ 8001690:	b298      	uxth	r0, r3
+ 8001692:	2364      	movs	r3, #100	; 0x64
+ 8001694:	9300      	str	r3, [sp, #0]
+ 8001696:	2300      	movs	r3, #0
+ 8001698:	f640 7282 	movw	r2, #3970	; 0xf82
+ 800169c:	f44f 717a 	mov.w	r1, #1000	; 0x3e8
+ 80016a0:	f000 fc2a 	bl	8001ef8 <map>
+ 80016a4:	eef0 7a40 	vmov.f32	s15, s0
+ 80016a8:	ed9f 7a27 	vldr	s14, [pc, #156]	; 8001748 <dirtHumRead+0xe4>
+ 80016ac:	ee77 7a67 	vsub.f32	s15, s14, s15
+ 80016b0:	4a26      	ldr	r2, [pc, #152]	; (800174c <dirtHumRead+0xe8>)
+ 80016b2:	687b      	ldr	r3, [r7, #4]
+ 80016b4:	009b      	lsls	r3, r3, #2
+ 80016b6:	4413      	add	r3, r2
+ 80016b8:	edc3 7a00 	vstr	s15, [r3]
 
 	  		  if (moisture_percentage[i]>100){moisture_percentage[i] = 100;}
- 80016ba:	4a24      	ldr	r2, [pc, #144]	; (800174c <dirtHumRead+0xe8>)
- 80016bc:	687b      	ldr	r3, [r7, #4]
- 80016be:	009b      	lsls	r3, r3, #2
- 80016c0:	4413      	add	r3, r2
- 80016c2:	edd3 7a00 	vldr	s15, [r3]
- 80016c6:	ed9f 7a20 	vldr	s14, [pc, #128]	; 8001748 <dirtHumRead+0xe4>
- 80016ca:	eef4 7ac7 	vcmpe.f32	s15, s14
- 80016ce:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 80016d2:	dd05      	ble.n	80016e0 <dirtHumRead+0x7c>
- 80016d4:	4a1d      	ldr	r2, [pc, #116]	; (800174c <dirtHumRead+0xe8>)
- 80016d6:	687b      	ldr	r3, [r7, #4]
- 80016d8:	009b      	lsls	r3, r3, #2
- 80016da:	4413      	add	r3, r2
- 80016dc:	4a1c      	ldr	r2, [pc, #112]	; (8001750 <dirtHumRead+0xec>)
- 80016de:	601a      	str	r2, [r3, #0]
+ 80016bc:	4a23      	ldr	r2, [pc, #140]	; (800174c <dirtHumRead+0xe8>)
+ 80016be:	687b      	ldr	r3, [r7, #4]
+ 80016c0:	009b      	lsls	r3, r3, #2
+ 80016c2:	4413      	add	r3, r2
+ 80016c4:	edd3 7a00 	vldr	s15, [r3]
+ 80016c8:	ed9f 7a1f 	vldr	s14, [pc, #124]	; 8001748 <dirtHumRead+0xe4>
+ 80016cc:	eef4 7ac7 	vcmpe.f32	s15, s14
+ 80016d0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 80016d4:	dd05      	ble.n	80016e2 <dirtHumRead+0x7e>
+ 80016d6:	4a1d      	ldr	r2, [pc, #116]	; (800174c <dirtHumRead+0xe8>)
+ 80016d8:	687b      	ldr	r3, [r7, #4]
+ 80016da:	009b      	lsls	r3, r3, #2
+ 80016dc:	4413      	add	r3, r2
+ 80016de:	4a1c      	ldr	r2, [pc, #112]	; (8001750 <dirtHumRead+0xec>)
+ 80016e0:	601a      	str	r2, [r3, #0]
 	  		  if (moisture_percentage[i]<0){moisture_percentage[i] = 0;}
- 80016e0:	4a1a      	ldr	r2, [pc, #104]	; (800174c <dirtHumRead+0xe8>)
- 80016e2:	687b      	ldr	r3, [r7, #4]
- 80016e4:	009b      	lsls	r3, r3, #2
- 80016e6:	4413      	add	r3, r2
- 80016e8:	edd3 7a00 	vldr	s15, [r3]
- 80016ec:	eef5 7ac0 	vcmpe.f32	s15, #0.0
- 80016f0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
- 80016f4:	d506      	bpl.n	8001704 <dirtHumRead+0xa0>
- 80016f6:	4a15      	ldr	r2, [pc, #84]	; (800174c <dirtHumRead+0xe8>)
- 80016f8:	687b      	ldr	r3, [r7, #4]
- 80016fa:	009b      	lsls	r3, r3, #2
- 80016fc:	4413      	add	r3, r2
- 80016fe:	f04f 0200 	mov.w	r2, #0
- 8001702:	601a      	str	r2, [r3, #0]
+ 80016e2:	4a1a      	ldr	r2, [pc, #104]	; (800174c <dirtHumRead+0xe8>)
+ 80016e4:	687b      	ldr	r3, [r7, #4]
+ 80016e6:	009b      	lsls	r3, r3, #2
+ 80016e8:	4413      	add	r3, r2
+ 80016ea:	edd3 7a00 	vldr	s15, [r3]
+ 80016ee:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+ 80016f2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+ 80016f6:	d506      	bpl.n	8001706 <dirtHumRead+0xa2>
+ 80016f8:	4a14      	ldr	r2, [pc, #80]	; (800174c <dirtHumRead+0xe8>)
+ 80016fa:	687b      	ldr	r3, [r7, #4]
+ 80016fc:	009b      	lsls	r3, r3, #2
+ 80016fe:	4413      	add	r3, r2
+ 8001700:	f04f 0200 	mov.w	r2, #0
+ 8001704:	601a      	str	r2, [r3, #0]
 	  for(int i = 0; i<6; i++){
- 8001704:	687b      	ldr	r3, [r7, #4]
- 8001706:	3301      	adds	r3, #1
- 8001708:	607b      	str	r3, [r7, #4]
- 800170a:	687b      	ldr	r3, [r7, #4]
- 800170c:	2b05      	cmp	r3, #5
- 800170e:	ddba      	ble.n	8001686 <dirtHumRead+0x22>
+ 8001706:	687b      	ldr	r3, [r7, #4]
+ 8001708:	3301      	adds	r3, #1
+ 800170a:	607b      	str	r3, [r7, #4]
+ 800170c:	687b      	ldr	r3, [r7, #4]
+ 800170e:	2b05      	cmp	r3, #5
+ 8001710:	ddba      	ble.n	8001688 <dirtHumRead+0x24>
 	  		  }
 	  lightIntensity = map(ADC_VAL[6], 150, 4095, 0, 100);
- 8001710:	4b0a      	ldr	r3, [pc, #40]	; (800173c <dirtHumRead+0xd8>)
- 8001712:	699b      	ldr	r3, [r3, #24]
- 8001714:	b298      	uxth	r0, r3
- 8001716:	2364      	movs	r3, #100	; 0x64
- 8001718:	9300      	str	r3, [sp, #0]
- 800171a:	2300      	movs	r3, #0
- 800171c:	f640 72ff 	movw	r2, #4095	; 0xfff
- 8001720:	2196      	movs	r1, #150	; 0x96
- 8001722:	f000 fbe9 	bl	8001ef8 <map>
- 8001726:	eef0 7a40 	vmov.f32	s15, s0
- 800172a:	4b0a      	ldr	r3, [pc, #40]	; (8001754 <dirtHumRead+0xf0>)
- 800172c:	edc3 7a00 	vstr	s15, [r3]
+ 8001712:	4b0b      	ldr	r3, [pc, #44]	; (8001740 <dirtHumRead+0xdc>)
+ 8001714:	699b      	ldr	r3, [r3, #24]
+ 8001716:	b298      	uxth	r0, r3
+ 8001718:	2364      	movs	r3, #100	; 0x64
+ 800171a:	9300      	str	r3, [sp, #0]
+ 800171c:	2300      	movs	r3, #0
+ 800171e:	f640 72ff 	movw	r2, #4095	; 0xfff
+ 8001722:	2196      	movs	r1, #150	; 0x96
+ 8001724:	f000 fbe8 	bl	8001ef8 <map>
+ 8001728:	eef0 7a40 	vmov.f32	s15, s0
+ 800172c:	4b09      	ldr	r3, [pc, #36]	; (8001754 <dirtHumRead+0xf0>)
+ 800172e:	edc3 7a00 	vstr	s15, [r3]
 	  sendAllReadingsUART();
- 8001730:	f000 f812 	bl	8001758 <sendAllReadingsUART>
+ 8001732:	f000 f811 	bl	8001758 <sendAllReadingsUART>
 }
- 8001734:	bf00      	nop
- 8001736:	3708      	adds	r7, #8
- 8001738:	46bd      	mov	sp, r7
- 800173a:	bd80      	pop	{r7, pc}
- 800173c:	200002f4 	.word	0x200002f4
- 8001740:	200001fc 	.word	0x200001fc
- 8001744:	000186a0 	.word	0x000186a0
+ 8001736:	bf00      	nop
+ 8001738:	3708      	adds	r7, #8
+ 800173a:	46bd      	mov	sp, r7
+ 800173c:	bd80      	pop	{r7, pc}
+ 800173e:	bf00      	nop
+ 8001740:	200002f4 	.word	0x200002f4
+ 8001744:	200001fc 	.word	0x200001fc
  8001748:	42c80000 	.word	0x42c80000
  800174c:	20000310 	.word	0x20000310
  8001750:	42c80000 	.word	0x42c80000
