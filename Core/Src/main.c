@@ -78,14 +78,19 @@ void dirtHumRead(){
 void sendAllReadingsUART(){
 	/*Przesył pod przechwytywanie do formatu csv*/
 	for(int i = 0; i<6; i++){
-		sprintf(UartOutText, "%2.f", moisture_percentage[i]);
+		sprintf(UartOutText, "%2.f\n", moisture_percentage[i]);
 		sendString_UART(UartOutText);
 	}
-	sprintf(UartOutText," %2.f", lightIntensity);
+	sprintf(UartOutText,"%2.f\n", lightIntensity);
 	sendString_UART(UartOutText);
 
-	  sprintf(UartOutText, " %2.f %2.f \n\r", Temperature, Humidity);
+	  sprintf(UartOutText, "%2.f\n", Temperature);
 	  sendString_UART(UartOutText);
+	  sprintf(UartOutText, "%2.f\n", Humidity);
+	  sendString_UART(UartOutText);
+	  sprintf(UartOutText, "git\n");
+	  sendString_UART(UartOutText);
+
 
 			/*Przesył pod szukanie problemów*/
 		//	for(int i = 0; i<6; i++){
