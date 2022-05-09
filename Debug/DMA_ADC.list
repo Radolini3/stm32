@@ -2724,7 +2724,7 @@ void sendAllReadingsUART(){
  800175e:	2300      	movs	r3, #0
  8001760:	607b      	str	r3, [r7, #4]
  8001762:	e013      	b.n	800178c <sendAllReadingsUART+0x34>
-		sprintf(UartOutText, "%2.f ", moisture_percentage[i]);
+		sprintf(UartOutText, "%2.f", moisture_percentage[i]);
  8001764:	4a20      	ldr	r2, [pc, #128]	; (80017e8 <sendAllReadingsUART+0x90>)
  8001766:	687b      	ldr	r3, [r7, #4]
  8001768:	009b      	lsls	r3, r3, #2

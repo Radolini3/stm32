@@ -78,7 +78,7 @@ void dirtHumRead(){
 void sendAllReadingsUART(){
 	/*Przesył pod przechwytywanie do formatu csv*/
 	for(int i = 0; i<6; i++){
-		sprintf(UartOutText, "%2.f ", moisture_percentage[i]);
+		sprintf(UartOutText, "%2.f", moisture_percentage[i]);
 		sendString_UART(UartOutText);
 	}
 	sprintf(UartOutText," %2.f", lightIntensity);
