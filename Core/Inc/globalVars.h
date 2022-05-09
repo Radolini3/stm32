@@ -25,5 +25,6 @@
 	extern float lightIntensity;
 	extern int disp_No;
 	extern struct lcd_disp disp;
+	extern int count;
 #endif /* SRC_GLOBALVARS_H_ */
 

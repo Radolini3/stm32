@@ -13,9 +13,13 @@
 	#include "stdio.h"
 /*Przerwanie po upłynięciu tim6 równego 10000 cykli (po sekundzie)*/
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	count++;
+	if ((count ==60) || (count == 0)){
 	dirtHumRead();
 	DHT11_allData();
 	displayReadings(disp_No);
+	}
+	if (count == 61) count = 1;
 }
 
 /*Przerwanie na liniach 10-15, w tym przypadku to jest button na płytce Nucleo*/

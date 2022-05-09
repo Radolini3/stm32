@@ -30,3 +30,4 @@
 		 int disp_No = 1;
 		 /*Obsługa LCD*/
 		 struct lcd_disp disp;
+		 int count = 0;
