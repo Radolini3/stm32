@@ -33,3 +33,4 @@
 		 int count = 0;
 		 /*Zmienna do sterowania czasem między odczytami i przesyłem danych z cuzjników*/
 		 short sensorRead_freq = 60;
+		 short pushCount = 0;

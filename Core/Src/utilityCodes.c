@@ -11,24 +11,56 @@
 	#include "globalVars.h"
 	#include "string.h"
 	#include "stdio.h"
+	#include "lcd_i2c.h"
 /*==============================Callbacki przerwań==============================*/
 	/*Przerwanie po upłynięciu tim6 równego 10000 cykli (po sekundzie) - zebranie danych z czujników*/
 	void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	//  count++;
-	//	if ((count == sensorRead_freq) || (count == 0)){
+
+		if ((count == sensorRead_freq) || (count == 0)){
 		analogDeviceReadDMA();
 		DHT11_allData();
 		displayReadings(disp_No);
-	//	}
-	//	if (count == sensorRead_freq) count = 1;
+		}
+		count++;
+		if (count >= sensorRead_freq) count = 1;
 	}
 
 	/*Przerwanie na liniach 10-15, w tym przypadku to jest button na płytce Nucleo*/
 	void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	{
+			if(!(HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin))){
 			disp_No++;
 			if (disp_No == 6) disp_No = 1;
 			displayReadings(disp_No);
+			}
+
+		//	while((HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin)));
+			if(!(HAL_GPIO_ReadPin(B2_GPIO_Port,B2_Pin))){
+				pushCount++;
+				if(pushCount == 4) pushCount = 1;
+				switch(pushCount){
+				case 1:
+					sensorRead_freq = 1;
+					count = 1;
+					sprintf((char *)disp.f_line, "ReadFreq 1s");
+				break;
+				case 2:
+					sensorRead_freq = 60;
+					count = 1;
+					sprintf((char *)disp.f_line, "ReadFreq 60s");
+				break;
+				case 3:
+					sensorRead_freq = 300;
+					count = 1;
+					sprintf((char *)disp.f_line, "ReadFreq 300s");
+				break;
+				}
+				sprintf((char *)disp.s_line, " ");
+				lcd_display(&disp);
+				delay_us(500000);
+				displayReadings(disp_No);
+
+			}
 	}
 
 /*==========================================================================================*/
