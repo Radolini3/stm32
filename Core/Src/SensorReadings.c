@@ -119,36 +119,36 @@
 		void sendAllReadingsUART(){
 			/*Przesył pod przechwytywanie do formatu csv*/
 
-//			for(int i = 0; i<6; i++){
-//				sprintf(UartOutText, "%2.f\n", moisture_percentage[i]);
-//				sendString_UART(UartOutText);
-//			}
-//
-//			sprintf(UartOutText,"%2.f\n", lightIntensity); //Natężenie światła
-//			sendString_UART(UartOutText);
-//
-//			sprintf(UartOutText, "%2.f\n", Temperature);   //Temperatura z DHT11
-//			sendString_UART(UartOutText);
-//
-//			sprintf(UartOutText, "%2.f\n", Humidity);	   // Wilgotność powietrza
-//			sendString_UART(UartOutText);
-//
-//			sprintf(UartOutText, "git\n");				   // Sygnał końca paczki danych ze wszystkich 9 czujników
-//			sendString_UART(UartOutText);
-
-
-			/*Przesył pod szukanie problemów*/
-
 			for(int i = 0; i<6; i++){
-				sprintf(UartOutText, "Czujnik nr: %d val %2.f%%\n\r ", i+1, moisture_percentage[i]);
+				sprintf(UartOutText, "%2.f\n", moisture_percentage[i]);
 				sendString_UART(UartOutText);
 			}
 
-			sprintf(UartOutText, "Natezenie oswietlenia: %2.f%% \n\r ", lightIntensity);
+			sprintf(UartOutText,"%2.f\n", lightIntensity); //Natężenie światła
 			sendString_UART(UartOutText);
 
-			sprintf(UartOutText, "Temp: %2.f Humidity %2.f \n\r ", Temperature, Humidity);
+			sprintf(UartOutText, "%2.f\n", Temperature);   //Temperatura z DHT11
 			sendString_UART(UartOutText);
+
+			sprintf(UartOutText, "%2.f\n", Humidity);	   // Wilgotność powietrza
+			sendString_UART(UartOutText);
+
+			sprintf(UartOutText, "git\n");				   // Sygnał końca paczki danych ze wszystkich 9 czujników
+			sendString_UART(UartOutText);
+
+
+			/*Przesył pod szukanie problemów*/
+//
+//			for(int i = 0; i<6; i++){
+//				sprintf(UartOutText, "Czujnik nr: %d val %2.f%%\n\r ", i+1, moisture_percentage[i]);
+//				sendString_UART(UartOutText);
+//			}
+//
+//			sprintf(UartOutText, "Natezenie oswietlenia: %2.f%% \n\r ", lightIntensity);
+//			sendString_UART(UartOutText);
+//
+//			sprintf(UartOutText, "Temp: %2.f Humidity %2.f \n\r ", Temperature, Humidity);
+//			sendString_UART(UartOutText);
 
 
 		}
