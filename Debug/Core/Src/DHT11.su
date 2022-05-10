@@ -1,6 +1,0 @@
-../Core/Src/DHT11.c:26:7:Set_Pin_Output	40	static
-../Core/Src/DHT11.c:34:7:Set_Pin_Input	40	static
-../Core/Src/DHT11.c:44:7:DHT11sensorInit	8	static
-../Core/Src/DHT11.c:55:10:sensorResponse	16	static
-../Core/Src/DHT11.c:69:10:sensorRead	16	static
-../Core/Src/DHT11.c:85:7:DHT11_allData	8	static

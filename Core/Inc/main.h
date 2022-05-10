@@ -57,7 +57,7 @@ void Error_Handler(void);
 	float map(uint16_t val, int in_min, int in_max, int out_min, int out_max);
 	void delay_us(uint32_t time);
 	void sendString_UART(char*text);
-	void dirtHumRead();
+	void analogDeviceReadDMA();
 	void Set_Pin_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 	void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 	void DHT11sensorInit(void);

@@ -1,4 +1,4 @@
-"./Core/Src/DHT11.o"
+"./Core/Src/SensorReadings.o"
 "./Core/Src/adc.o"
 "./Core/Src/dma.o"
 "./Core/Src/globalVars.o"

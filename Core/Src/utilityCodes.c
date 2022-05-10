@@ -11,24 +11,27 @@
 	#include "globalVars.h"
 	#include "string.h"
 	#include "stdio.h"
-/*Przerwanie po upłynięciu tim6 równego 10000 cykli (po sekundzie)*/
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	count++;
-	if ((count ==60) || (count == 0)){
-	dirtHumRead();
-	DHT11_allData();
-	displayReadings(disp_No);
-	}
-	if (count == 61) count = 1;
-}
-
-/*Przerwanie na liniach 10-15, w tym przypadku to jest button na płytce Nucleo*/
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-		disp_No++;
-		if (disp_No == 6) disp_No = 1;
+/*==============================Callbacki przerwań==============================*/
+	/*Przerwanie po upłynięciu tim6 równego 10000 cykli (po sekundzie) - zebranie danych z czujników*/
+	void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	//  count++;
+	//	if ((count == sensorRead_freq) || (count == 0)){
+		analogDeviceReadDMA();
+		DHT11_allData();
 		displayReadings(disp_No);
-}
+	//	}
+	//	if (count == sensorRead_freq) count = 1;
+	}
+
+	/*Przerwanie na liniach 10-15, w tym przypadku to jest button na płytce Nucleo*/
+	void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+	{
+			disp_No++;
+			if (disp_No == 6) disp_No = 1;
+			displayReadings(disp_No);
+	}
+
+/*==========================================================================================*/
 /*Milisekundowy delay na timerze, tim2 prescaler 72-1, brak przerwań przez tim2*/
 void delay_us(uint32_t time){
 	__HAL_TIM_SET_COUNTER(&htim2, 0);
@@ -40,7 +43,7 @@ void sendString_UART(char*text){
 	HAL_UART_Transmit(&huart2,  (uint8_t*)text, strlen(text), 1000);
 }
 
-/*Przeskaluj wartość analogową z adcka na procenty*/
+/*Przeskaluj wartość analogową z ADCka na procenty*/
 float map(uint16_t val, int in_min, int in_max, int out_min, int out_max) {
   return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

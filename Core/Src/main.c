@@ -27,10 +27,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "globalVars.h"
-#include "stdio.h"
-#include "string.h"
-#include "lcd_i2c.h"
+	#include "globalVars.h"
+	#include "lcd_i2c.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,50 +59,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void dirtHumRead(){
-	  HAL_ADC_Start_DMA(&hadc1, ADC_VAL, 7);
-	  delay_us(10000); // bez tego delaya się rozlatuje odczyt
-	  HAL_ADC_Stop_DMA(&hadc1);
-
-	  for(int i = 0; i<6; i++){
-	  		  moisture_percentage[i] = 100-( map(ADC_VAL[i], 1000, 3970, 0, 100));
-
-	  		  if (moisture_percentage[i]>100){moisture_percentage[i] = 100;}
-	  		  if (moisture_percentage[i]<0){moisture_percentage[i] = 0;}
-	  		  }
-	  lightIntensity = map(ADC_VAL[6], 150, 4095, 0, 100);
-	  sendAllReadingsUART();
-}
-void sendAllReadingsUART(){
-	/*Przesył pod przechwytywanie do formatu csv*/
-	for(int i = 0; i<6; i++){
-		sprintf(UartOutText, "%2.f\n", moisture_percentage[i]);
-		sendString_UART(UartOutText);
-	}
-	sprintf(UartOutText,"%2.f\n", lightIntensity);
-	sendString_UART(UartOutText);
-
-	  sprintf(UartOutText, "%2.f\n", Temperature);
-	  sendString_UART(UartOutText);
-	  sprintf(UartOutText, "%2.f\n", Humidity);
-	  sendString_UART(UartOutText);
-	  sprintf(UartOutText, "git\n");
-	  sendString_UART(UartOutText);
-
-
-			/*Przesył pod szukanie problemów*/
-		//	for(int i = 0; i<6; i++){
-		//		sprintf(UartOutText, "Czujnik nr: %d val %2.f%%\n\r ", i+1, moisture_percentage[i]);
-		//		sendString_UART(UartOutText);
-		//	}
-		//	sprintf(UartOutText, "Natezenie oswietlenia: %2.f%% \n\r ", lightIntensity);
-		//	sendString_UART(UartOutText);
-
-		//	  sprintf(UartOutText, "Temp: %2.f Humidity %2.f \n\r ", Temperature, Humidity);
-		//	  sendString_UART(UartOutText);
-
-
-}
 
 /* USER CODE END 0 */
 
@@ -144,12 +98,11 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_TIM_Base_Start(&htim2);
-  HAL_TIM_Base_Start_IT(&htim6);
-
-  disp.addr = (0x27 << 1);
-  disp.bl = true;
-  lcd_init(&disp);
+	  HAL_TIM_Base_Start(&htim2); 	 // Start timer2 w trybie normalnym
+	  HAL_TIM_Base_Start_IT(&htim6); // Start timera6 w trybie przerwania
+	  disp.addr = (0x27 << 1);		 // Adres LCD'ka po I2C
+	  disp.bl = true;				 // Włącz podświetlenie
+	  lcd_init(&disp);				 // Inicjalizuj LCD
 
   /* USER CODE END 2 */
 
