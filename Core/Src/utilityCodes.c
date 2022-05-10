@@ -35,6 +35,7 @@
 			}
 
 		//	while((HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin)));
+			/*Zmień częstotliwość odczytów z czujników*/
 			if(!(HAL_GPIO_ReadPin(B2_GPIO_Port,B2_Pin))){
 				pushCount++;
 				if(pushCount == 4) pushCount = 1;
@@ -57,8 +58,8 @@
 				}
 				sprintf((char *)disp.s_line, " ");
 				lcd_display(&disp);
-				delay_us(500000);
-				displayReadings(disp_No);
+				// delay_us(500000);
+				// displayReadings(disp_No);
 
 			}
 	}
